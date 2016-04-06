@@ -18,9 +18,7 @@ class MainApp extends PolymerElement {
 
   void ready() {
     Logger.root.info("main-app ready");
-    var open = () => Logger.root.info("opened");
-    var close = () => Logger.root.info("closed");
-    _connectToServer(open, close);
+    _connectToServer();
   }
 
   void _onMessage(AppEngineChan.Message message) {
@@ -31,21 +29,28 @@ class MainApp extends PolymerElement {
     Logger.root.info("$err");
   }
 
-  void _connectToServer(Function onOpen, Function onClose) {
+  _connectToServer() async {
+    var open = () => Logger.root.info("opened");
+    var close = () => Logger.root.info("closed");
+    var token = await _getToken();
     Logger.root.info("creating channel");
     var chan = new AppEngineChan.Channel(token);
     Logger.root.info("opening channel socket");
     var socket = chan.open();
     Logger.root.info("Setting handlers to socket");
-    if (onOpen != null) {
-      socket.onopen = allowInterop(onOpen);
+    if (open != null) {
+      socket.onopen = allowInterop(open);
     }
-    if (onClose != null) {
-      socket.onclose = allowInterop(onClose);
+    if (close != null) {
+      socket.onclose = allowInterop(close);
     }
     socket.onerror = allowInterop(_onError);
     socket.onmessage = allowInterop(_onMessage);
     _socket = socket;
+  }
+
+  Future<String> _getToken() async {
+    return token;
   }
 
   AppEngineChan.Socket _socket;
