@@ -17,10 +17,6 @@ const (
 	indexFileName          string = "index.html"
 )
 
-type IndexParam struct {
-	ChannelToken string
-}
-
 // Create a template with a custom delimiter
 // because the default delimiter interferes with polymer's templating
 var tmpl *template.Template = template.Must(
@@ -32,9 +28,10 @@ var tmpl *template.Template = template.Must(
 // setup handlers
 func init() {
 	http.HandleFunc("/", handler)
+	http.HandleFunc("/api/client", handleNewClient)
 }
 
-func handler(w http.ResponseWriter, r *http.Request) {
+func handleNewClient(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
 	token, err := channel.Create(c, "testclient")
 	if err != nil {
@@ -42,7 +39,17 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = tmpl.ExecuteTemplate(w, indexFileName, IndexParam{ChannelToken: token})
+	_, err = w.Write([]byte(token))
+	if err != nil {
+		log.Errorf(c, "%v", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	err := tmpl.ExecuteTemplate(w, indexFileName, nil)
 	if err != nil {
 		log.Errorf(c, "Error while executing template: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
