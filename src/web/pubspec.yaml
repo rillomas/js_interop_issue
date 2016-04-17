@@ -1,8 +1,7 @@
-name: js_interop_issue
+name: js_interop
 dependencies:
   logging: any
   polymer: ^1.0.0-rc.15
-  polymer_elements: 1.0.0-rc.8
   browser: ^0.10.0
   js: ^0.6.0
   dart_to_js_script_rewriter: "^1.0.1"
