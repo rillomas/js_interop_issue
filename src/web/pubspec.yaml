@@ -1,12 +1,5 @@
 name: js_interop
 dependencies:
   logging: any
-  polymer: ^1.0.0-rc.15
   browser: ^0.10.0
   js: ^0.6.0
-  dart_to_js_script_rewriter: "^1.0.1"
-transformers:
-- polymer:
-    entry_points:
-      - web/index.html
-- dart_to_js_script_rewriter
