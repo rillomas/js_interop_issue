@@ -1,5 +1,4 @@
 name: js_interop
 dependencies:
-  logging: any
   browser: ^0.10.0
   js: ^0.6.0

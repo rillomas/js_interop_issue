@@ -22,16 +22,3 @@ class Channel {
   external Channel(String token);
   external Socket open();
 }
-
-@JS()
-@anonymous
-class Message {
-  external String get data;
-}
-
-@JS()
-@anonymous
-class Error {
-  external String get description;
-  external int get code;
-}
