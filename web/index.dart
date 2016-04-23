@@ -18,7 +18,11 @@ class Initializer {
   }
 
   _pulseHeartbeat(Timer t) async {
-    await HttpRequest.request("", method:"POST");
+    try {
+      await HttpRequest.request("", method:"POST");
+    } catch (e) {
+      print("Pulse heartbeat failed: ${e}");
+    }
   }
 
   /// Connect to server
@@ -32,7 +36,7 @@ class Initializer {
     return socket;
   }
 
-  static const HEARTBEAT_INTERVAL = const Duration(minutes: 3);
+  static const HEARTBEAT_INTERVAL = const Duration(seconds: 5);
 
   Timer _heartbeater;
 }
