@@ -10,7 +10,7 @@ class Initializer {
       print("Received channel: ${socket}");
 
       print("Client Ready");
-      // enqueue periodic heartbeat
+      // Comment out the following line and the sample will work properly
       _heartbeater = new Timer.periodic(HEARTBEAT_INTERVAL, _pulseHeartbeat);
     } catch (e) {
       print("server connect failed: ${e}");
@@ -25,9 +25,7 @@ class Initializer {
     }
   }
 
-  /// Connect to server
   Future<AppEngineChan.Socket> connect(int roomId) async {
-    // connect to the server via channel api
     print("creating channel");
     var chan = new AppEngineChan.Channel("");
     print("opening channel socket");
