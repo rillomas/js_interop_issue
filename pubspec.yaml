@@ -2,3 +2,8 @@ name: js_interop
 dependencies:
   browser: ^0.10.0
   js: ^0.6.0
+transformers:
+- $dart2js:
+    checked: false
+    minify: false
+    sourceMaps: true
