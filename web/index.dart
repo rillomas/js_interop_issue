@@ -5,16 +5,12 @@ import 'package:js_interop/channel/channel.dart' as AppEngineChan;
 class Initializer {
   init() async {
     print("Sending connect request");
-    try {
-      var socket = await connect(0);
-      print("Received channel: ${socket}");
+    var socket = await connect(0);
+    print("Received channel: ${socket}");
 
-      print("Client Ready");
-      // Comment out the following line and the sample will work properly
-      _heartbeater = new Timer.periodic(HEARTBEAT_INTERVAL, _pulseHeartbeat);
-    } catch (e) {
-      print("server connect failed: ${e}");
-    }
+    print("Client Ready");
+    // Comment out the following line and the sample will work properly
+    _heartbeater = new Timer.periodic(HEARTBEAT_INTERVAL, _pulseHeartbeat);
   }
 
   _pulseHeartbeat(Timer t) async {
