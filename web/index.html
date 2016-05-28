@@ -7,9 +7,6 @@
     <meta name="mobile-web-app-capable" content="yes">
   </head>
   <body>
-    <script type="text/javascript" src="channel.js"></script>
-    <script type="application/javascript" src="index.dart.js"></script>
-    <!-- <script type="application/dart" src="index.dart"></script> -->
     <script>
         // Provide a getTag hook to ensure that ensures normal JavaScript
         // objects are not confused with DOM objects.
@@ -19,15 +16,19 @@
           var toString = Object.prototype.toString;
           hooks.getTag = function (obj) {
             var tag = getTag(obj);
-            console.log(tag);
             if (tag == null) return null;
             // Validate that is a normal object.
-            if (toString.call(obj) == "[object Object]") return null;
+            var objstr = toString.call(obj);
+            console.log("tag: " + tag +", objstr: "+objstr);
+            if (objstr == "[object Object]") return null;
             return tag;
           };
           return hooks;
         });
     </script>
     <script src="packages/browser/dart.js"></script>
+    <script type="text/javascript" src="channel.js"></script>
+    <!-- <script type="application/dart" src="index.dart"></script> -->
+    <script type="application/javascript" src="index.dart.js"></script>
   </body>
 </html>
